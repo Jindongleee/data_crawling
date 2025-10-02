@@ -59,3 +59,14 @@ def solution(n, m):
 n=int(input())
 m = int(input())
 print(solution(n,m))
+
+
+
+
+
+
+
+
+
+a = input()
+
