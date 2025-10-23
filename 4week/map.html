@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e87ab7893f630ab2fcc7ff8f61bcec09 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_e87ab7893f630ab2fcc7ff8f61bcec09" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e87ab7893f630ab2fcc7ff8f61bcec09 = L.map(
+                "map_e87ab7893f630ab2fcc7ff8f61bcec09",
+                {
+                    center: [37.5665, 126.978],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8b8704c351e59608fd1c2863fb39b49e = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8b8704c351e59608fd1c2863fb39b49e.addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+            var marker_07c4d6b35f09924f921da57aba598b36 = L.marker(
+                [37.60874446546178, 127.00912148250727],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_1633b499e8c7f58f21dcc9365d521dcd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8877d081a7b18c20e483ccc1996808eb = $(`<div id="html_8877d081a7b18c20e483ccc1996808eb" style="width: 100.0%; height: 100.0%;">청년밥상문간 (서울 성북구 정릉동 398-8)</div>`)[0];
+                popup_1633b499e8c7f58f21dcc9365d521dcd.setContent(html_8877d081a7b18c20e483ccc1996808eb);
+            
+        
+
+        marker_07c4d6b35f09924f921da57aba598b36.bindPopup(popup_1633b499e8c7f58f21dcc9365d521dcd)
+        ;
+
+        
+    
+    
+            var marker_07ad6f10e8c4d5dd0899460c905f2a81 = L.marker(
+                [37.6111019133989, 127.013686053343],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_83bf3b79fd53141ba3f5332e4c0f267c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_996c5eec5889ac1f893843382ed55c26 = $(`<div id="html_996c5eec5889ac1f893843382ed55c26" style="width: 100.0%; height: 100.0%;">동방손칼국수 (서울 성북구 정릉동 1013)</div>`)[0];
+                popup_83bf3b79fd53141ba3f5332e4c0f267c.setContent(html_996c5eec5889ac1f893843382ed55c26);
+            
+        
+
+        marker_07ad6f10e8c4d5dd0899460c905f2a81.bindPopup(popup_83bf3b79fd53141ba3f5332e4c0f267c)
+        ;
+
+        
+    
+    
+            var marker_836ad2b2f446ded63cfa8c6c77bf581b = L.marker(
+                [37.61105538752959, 127.01051030255165],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_12b6f37f097a6e5dc0d47d2c0666c033 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d51054f8121242c37d3b1907dc286f1b = $(`<div id="html_d51054f8121242c37d3b1907dc286f1b" style="width: 100.0%; height: 100.0%;">지하서재 (서울 성북구 정릉동 266-328)</div>`)[0];
+                popup_12b6f37f097a6e5dc0d47d2c0666c033.setContent(html_d51054f8121242c37d3b1907dc286f1b);
+            
+        
+
+        marker_836ad2b2f446ded63cfa8c6c77bf581b.bindPopup(popup_12b6f37f097a6e5dc0d47d2c0666c033)
+        ;
+
+        
+    
+    
+            var marker_7f566816fc98648e01d88dca1dcb38a8 = L.marker(
+                [37.61238002060219, 127.00825662334532],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_b1177bc17cd355a92df5133cec14cfba = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9221abe0bf4cf1310af37f3c82abad58 = $(`<div id="html_9221abe0bf4cf1310af37f3c82abad58" style="width: 100.0%; height: 100.0%;">마몽함박 (서울 성북구 정릉동 289-50)</div>`)[0];
+                popup_b1177bc17cd355a92df5133cec14cfba.setContent(html_9221abe0bf4cf1310af37f3c82abad58);
+            
+        
+
+        marker_7f566816fc98648e01d88dca1dcb38a8.bindPopup(popup_b1177bc17cd355a92df5133cec14cfba)
+        ;
+
+        
+    
+    
+            var marker_cecf67b906a47fe296034c4ecfd558e8 = L.marker(
+                [37.608915684352276, 127.00871265530098],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_208ddcb5e12e5d6ac39c80d54c76842a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_372d18c43efd7efb2885153dd8da5a75 = $(`<div id="html_372d18c43efd7efb2885153dd8da5a75" style="width: 100.0%; height: 100.0%;">기차순대국 (서울 성북구 정릉동 347-2)</div>`)[0];
+                popup_208ddcb5e12e5d6ac39c80d54c76842a.setContent(html_372d18c43efd7efb2885153dd8da5a75);
+            
+        
+
+        marker_cecf67b906a47fe296034c4ecfd558e8.bindPopup(popup_208ddcb5e12e5d6ac39c80d54c76842a)
+        ;
+
+        
+    
+    
+            var marker_d034d42078353dc708f0145a9abf0e1c = L.marker(
+                [37.61052393704986, 127.0088906560311],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_0056876f5e6d59bcbfb56d23bf2146c1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_063c83230040947cbec1ff9ac817a6b4 = $(`<div id="html_063c83230040947cbec1ff9ac817a6b4" style="width: 100.0%; height: 100.0%;">소우락정육식당 정릉본점 (서울 성북구 정릉동 284-13)</div>`)[0];
+                popup_0056876f5e6d59bcbfb56d23bf2146c1.setContent(html_063c83230040947cbec1ff9ac817a6b4);
+            
+        
+
+        marker_d034d42078353dc708f0145a9abf0e1c.bindPopup(popup_0056876f5e6d59bcbfb56d23bf2146c1)
+        ;
+
+        
+    
+    
+            var marker_d93650be3e5e558cc0abb8dd7a8a8656 = L.marker(
+                [37.611235220429776, 127.01402132098627],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_c41938498900ea3752785765120548f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2804f5ece2ff328cbde17ac1ab36af15 = $(`<div id="html_2804f5ece2ff328cbde17ac1ab36af15" style="width: 100.0%; height: 100.0%;">홈타운바베큐치킨 (서울 성북구 정릉동 227)</div>`)[0];
+                popup_c41938498900ea3752785765120548f9.setContent(html_2804f5ece2ff328cbde17ac1ab36af15);
+            
+        
+
+        marker_d93650be3e5e558cc0abb8dd7a8a8656.bindPopup(popup_c41938498900ea3752785765120548f9)
+        ;
+
+        
+    
+    
+            var marker_9507360a16ffa82240b271b937d68fa8 = L.marker(
+                [37.61210512322369, 127.00952736075494],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_256ab4a06649f792cbc414b7debed87b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ec558d61c2a4f55f90d829c9b030603d = $(`<div id="html_ec558d61c2a4f55f90d829c9b030603d" style="width: 100.0%; height: 100.0%;">구름파스타 (서울 성북구 정릉동 260-29)</div>`)[0];
+                popup_256ab4a06649f792cbc414b7debed87b.setContent(html_ec558d61c2a4f55f90d829c9b030603d);
+            
+        
+
+        marker_9507360a16ffa82240b271b937d68fa8.bindPopup(popup_256ab4a06649f792cbc414b7debed87b)
+        ;
+
+        
+    
+    
+            var marker_9a3bc6ef6359e576f5025f51e3d2fd08 = L.marker(
+                [37.612479166684864, 127.00770505942322],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_eec079545ea934905c3a4987f924f13d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d0ebd58637b638ebbcb025d3288eb805 = $(`<div id="html_d0ebd58637b638ebbcb025d3288eb805" style="width: 100.0%; height: 100.0%;">임금님수타자장면 (서울 성북구 정릉동 298-2)</div>`)[0];
+                popup_eec079545ea934905c3a4987f924f13d.setContent(html_d0ebd58637b638ebbcb025d3288eb805);
+            
+        
+
+        marker_9a3bc6ef6359e576f5025f51e3d2fd08.bindPopup(popup_eec079545ea934905c3a4987f924f13d)
+        ;
+
+        
+    
+    
+            var marker_7f4a2178348b6e304dfacfb61d835814 = L.marker(
+                [37.6053178643889, 127.010749582839],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_b0427a01e6925d0ef39aca0cdf32d1a6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e7fda7e4133cf849db1189aefed1fa3f = $(`<div id="html_e7fda7e4133cf849db1189aefed1fa3f" style="width: 100.0%; height: 100.0%;">청수장 (서울 성북구 정릉동 416-27)</div>`)[0];
+                popup_b0427a01e6925d0ef39aca0cdf32d1a6.setContent(html_e7fda7e4133cf849db1189aefed1fa3f);
+            
+        
+
+        marker_7f4a2178348b6e304dfacfb61d835814.bindPopup(popup_b0427a01e6925d0ef39aca0cdf32d1a6)
+        ;
+
+        
+    
+    
+            var marker_820e481570ae0bf6b2a37f737e048509 = L.marker(
+                [37.619668202242565, 127.01613540184988],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_018b42e56d5d6217bf01aba4d4b3d8f5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a32cbd55a7220ee88cd8454b4957981e = $(`<div id="html_a32cbd55a7220ee88cd8454b4957981e" style="width: 100.0%; height: 100.0%;">명륜진사갈비 서울미아점 (서울 강북구 미아동 811-1)</div>`)[0];
+                popup_018b42e56d5d6217bf01aba4d4b3d8f5.setContent(html_a32cbd55a7220ee88cd8454b4957981e);
+            
+        
+
+        marker_820e481570ae0bf6b2a37f737e048509.bindPopup(popup_018b42e56d5d6217bf01aba4d4b3d8f5)
+        ;
+
+        
+    
+    
+            var marker_cf40391a142622652c6aec2dae2962e7 = L.marker(
+                [37.61245119983507, 127.00824077485856],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_c3f83114234656b84a68f5a85842de40 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_218bc75119280b0607d6a569ba048d16 = $(`<div id="html_218bc75119280b0607d6a569ba048d16" style="width: 100.0%; height: 100.0%;">마마우동 (서울 성북구 정릉동 289-1)</div>`)[0];
+                popup_c3f83114234656b84a68f5a85842de40.setContent(html_218bc75119280b0607d6a569ba048d16);
+            
+        
+
+        marker_cf40391a142622652c6aec2dae2962e7.bindPopup(popup_c3f83114234656b84a68f5a85842de40)
+        ;
+
+        
+    
+    
+            var marker_f6e52438e08d32fbb1d11497c4ad64fa = L.marker(
+                [37.61973994409529, 127.01843707883486],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_d1b78ee418a8ec7cbc264a986da48901 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bbdb3234895cf1b6d124771e910173db = $(`<div id="html_bbdb3234895cf1b6d124771e910173db" style="width: 100.0%; height: 100.0%;">주대국초밥집 미아점 (서울 강북구 미아동 1343-3)</div>`)[0];
+                popup_d1b78ee418a8ec7cbc264a986da48901.setContent(html_bbdb3234895cf1b6d124771e910173db);
+            
+        
+
+        marker_f6e52438e08d32fbb1d11497c4ad64fa.bindPopup(popup_d1b78ee418a8ec7cbc264a986da48901)
+        ;
+
+        
+    
+    
+            var marker_32697b2ca61dd802a4432a09c12dfeb4 = L.marker(
+                [37.612885306875185, 127.01038937151557],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_fdc5aef5e4c2d9adec4657692d99ac3f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7977bfddf1e40014f5a7c0e4c613aa62 = $(`<div id="html_7977bfddf1e40014f5a7c0e4c613aa62" style="width: 100.0%; height: 100.0%;">모던양갱집 (서울 성북구 정릉동 266-98)</div>`)[0];
+                popup_fdc5aef5e4c2d9adec4657692d99ac3f.setContent(html_7977bfddf1e40014f5a7c0e4c613aa62);
+            
+        
+
+        marker_32697b2ca61dd802a4432a09c12dfeb4.bindPopup(popup_fdc5aef5e4c2d9adec4657692d99ac3f)
+        ;
+
+        
+    
+    
+            var marker_2c7f00dbe064a3572099571c0e223f8c = L.marker(
+                [37.61609234129553, 127.00312498714666],
+                {
+}
+            ).addTo(map_e87ab7893f630ab2fcc7ff8f61bcec09);
+        
+    
+        var popup_97fe8f8c80e250352f5b07af9ab17fa7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9325d3f0a0319362bad0e2d6b83d43b8 = $(`<div id="html_9325d3f0a0319362bad0e2d6b83d43b8" style="width: 100.0%; height: 100.0%;">바람난오리궁뎅이 (서울 성북구 정릉동 767-4)</div>`)[0];
+                popup_97fe8f8c80e250352f5b07af9ab17fa7.setContent(html_9325d3f0a0319362bad0e2d6b83d43b8);
+            
+        
+
+        marker_2c7f00dbe064a3572099571c0e223f8c.bindPopup(popup_97fe8f8c80e250352f5b07af9ab17fa7)
+        ;
+
+        
+    
+</script>
+</html>
