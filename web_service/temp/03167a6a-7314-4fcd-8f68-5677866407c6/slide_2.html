@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From EmoSet to MVP: How Large-scale Visual Emotion Data Enable Semantic Prompt Learning</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts (Pretendard for Korean, Inter for fallback) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soft-white': '#F9F8F6', // 부드러운 흰색 배경
+                        'dark-gray': '#333333',  // 기본 텍스트
+                        'coral-red': '#FF6B6B',  // 메인 하이라이트 (약간 부드럽게)
+                        'coral-dark': '#E05252', // 어두운 하이라이트
+                        'light-gray': '#EAEAEA', // 보더, 배경
+                    },
+                    fontFamily: {
+                        'sans': ['Pretendard', 'Inter', 'sans-serif'], // Pretendard 우선 적용
+                    },
+                    aspectRatio: {
+                        '16/9': '16 / 9',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Slide Styles -->
+    <style>
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            background-color: #202124; /* 어두운 배경 (프레젠테이션 강조) */
+            overflow: hidden; /* 스크롤 방지 */
+        }
+        #presentation-container {
+            /* 그림자 및 UI 일관성을 위해 */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        .slide {
+            transition: opacity 0.4s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #F9F8F6; /* soft-white */
+            color: #333333; /* dark-gray */
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 슬라이드 기본 레이아웃 */
+        .slide-header {
+            padding: 2.5rem 3rem 0 3rem; /* 10 12 0 12 */
+        }
+        .slide-body {
+            flex-grow: 1;
+            padding: 1.5rem 3rem 3rem 3rem; /* 6 12 12 12 */
+            overflow-y: auto;
+        }
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 3rem; /* 3 12 */
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem; /* text-sm */
+            color: #888888;
+            border-top: 1px solid #EAEAEA; /* light-gray */
+        }
+        /* 공통 헤더 스타일 */
+        h2 {
+            font-size: 2rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #333333; /* dark-gray */
+            padding-bottom: 0.75rem; /* pb-3 */
+            border-bottom: 4px solid #FF6B6B; /* border-coral-red */
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            color: #333333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin-top: 1rem;
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.8;
+            color: #444444;
+        }
+        p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.8;
+            color: #444444;
+            margin-top: 1rem;
+        }
+        /* 피규어 플레이스홀더 */
+        .figure-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            background-color: #F0F0F0; /* light-gray 옅은 버전 */
+            border: 2px dashed #BDBDBD; /* 회색 점선 */
+            border-radius: 0.5rem; /* rounded-lg */
+            color: #777777;
+            font-weight: 600;
+            font-size: 1rem; /* text-base */
+        }
+    </style>
+
+    <style>
+        /* 개별 슬라이드일 때 position: absolute가 레이아웃을 깨뜨리므로 relative로 변경 */
+        .slide {
+            position: relative !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        /* slides-wrapper도 relative로 확실히 설정 */
+        #slides-wrapper {
+            position: relative !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        /* presentation-container가 화면 전체를 차지하도록 */
+        #presentation-container {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        /* body도 화면 전체를 차지하고 여백 제거 */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        /* html도 화면 전체를 차지 */
+        html {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+    </head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+    <div id="presentation-container" class="w-full max-w-6xl aspect-16/9 rounded-lg overflow-hidden relative">
+        <div id="slides-wrapper" class="w-full h-full relative" style="">
+            <section class="slide active">
+<div class="slide-header">
+<h2>Presentation Overview: 발표 목적과 시리즈 맥락</h2>
+</div>
+<div class="slide-body">
+<p>본 세미나는 감정 인식(Emotion Recognition) 연구를 **모달리티(Modality)**별로 탐구하는 2025년 시리즈의 첫 번째 세션입니다.</p>
+<ul>
+<li>금일 세션은 <strong class="text-coral-red">Image-based Emotion Recognition</strong> 연구 동향에 초점을 맞춥니다.</li>
+<li>후속 세션에서는 Text, Multimodal, 그리고 Memory와의 연관성을 순차적으로 다룰 예정입니다.</li>
+</ul>
+<div class="mt-8 p-6 bg-gray-100 rounded-lg border border-light-gray">
+<h3 class="text-xl font-semibold text-dark-gray">핵심 질문 (Key Questions)</h3>
+<p class="mt-2 text-lg">데이터셋 중심의 연구 방법론을 이해하기 위해 다음 3가지 질문에 답하는 것을 목표로 합니다.</p>
+<ol class="list-decimal list-inside mt-3 space-y-2 text-lg text-gray-700">
+<li>1. 해당 데이터셋으로 <strong class="text-coral-red">어떤 연구</strong>가 이루어졌는가? (What research?)</li>
+<li>2. 데이터셋이 <strong class="text-coral-red">어떤 실험</strong>에 활용되었는가? (How used?)</li>
+<li>3. <strong class="text-coral-red">어떤 방식</strong>으로 성능이 향상되었는가? (How improved?)</li>
+</ol>
+</div>
+<p class="mt-6 text-center text-xl font-semibold text-coral-dark">
+                        "Dataset enables method — and method validates dataset."
+                    </p>
+</div>
+<div class="slide-footer">
+<span>From EmoSet to MVP (Seo, Hyeeun)</span>
+<span>2 / 20</span>
+</div>
+</section>
+        </div>
+    </div>
+</body>
+</html>

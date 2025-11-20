@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figma Import - SemEval-2025 Task 11</title>
+    
+    <!-- Tailwind CSS (플러그인이 스타일을 읽기 위해 필수) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'slide-bg': '#F8F9FA', 'slide-text': '#212529',
+                        'slide-blue': '#005A9C', 'slide-blue-light': '#E6F0F8',
+                        'slide-gray': '#6C757D', 'slide-border': '#DEE2E6',
+                    },
+                    fontFamily: { 'sans': ['Pretendard', 'Inter', 'sans-serif'] },
+                    aspectRatio: { '16/9': '16 / 9' }
+                }
+            }
+        }
+    </script>
+
+    <!-- Figma Import용 스타일 수정 -->
+    <style>
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            background-color: #343A40; /* 어두운 배경 */
+        }
+        /* [중요] 모든 슬라이드가 보이도록 JS/CSS 수정 */
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: flex; /* hidden 해제 */
+            flex-direction: column;
+            background-color: #F8F9FA;
+            color: #212529;
+            margin-bottom: 2rem; /* 슬라이드 간 간격 */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* 그림자 */
+        }
+        .slide-header { padding: 2.5rem 3rem 0 3rem; flex-shrink: 0; }
+        .slide-body { flex-grow: 1; padding: 1.5rem 3rem 3rem 3rem; overflow-y: auto; }
+        .slide-footer {
+            /* 푸터가 겹치지 않도록 relative로 변경 */
+            position: relative; 
+            padding: 0.75rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: #6C757D;
+            border-top: 1px solid #DEE2E6;
+            flex-shrink: 0;
+        }
+        h2 {
+            font-size: 2rem; font-weight: 700; color: #212529;
+            padding-bottom: 0.75rem; border-bottom: 4px solid #005A9C;
+            display: inline-block;
+        }
+        h3 { font-size: 1.5rem; font-weight: 600; color: #005A9C; }
+        ul {
+            list-style-type: none; padding-left: 0; margin-top: 1.5rem;
+            font-size: 1.125rem; line-height: 1.8; color: #343A4F;
+        }
+        ul > li {
+            position: relative; padding-left: 2rem; margin-bottom: 0.75rem;
+        }
+        ul > li::before {
+            content: '■'; position: absolute; left: 0; top: 4px;
+            color: #005A9C; font-size: 0.8rem;
+        }
+        p { font-size: 1.125rem; line-height: 1.8; color: #343A4F; margin-top: 1rem; }
+        .figure-placeholder {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%; height: 100%; min-height: 200px;
+            background-color: #FFFFFF; border: 2px dashed #DEE2E6;
+            border-radius: 0.5rem; color: #6C757D;
+            font-weight: 600; font-size: 1rem;
+        }
+    </style>
+
+    <style>
+        /* 개별 슬라이드일 때 position: absolute가 레이아웃을 깨뜨리므로 relative로 변경 */
+        .slide {
+            position: relative !important;
+        }
+        /* slides-wrapper도 relative로 확실히 설정 */
+        #slides-wrapper {
+            position: relative !important;
+        }
+    </style>
+    </head>
+<body class="p-8 md:p-12">
+    <div id="presentation-container" class="">
+        <div id="slides-wrapper" class="w-full max-w-6xl mx-auto flex flex-col gap-8" style="">
+            <section class="slide aspect-16/9 active">
+<div class="slide-header">
+<h2>실험 분석 - 주요 방법론</h2>
+</div>
+<div class="slide-body grid grid-cols-2 gap-8">
+<div>
+<h3 class="text-lg font-semibold text-slide-text mb-2">압도적 트렌드: LLM + Prompting</h3>
+<ul>
+<li>
+                            **LLM 미세조정** (Gemma-2, LLaMA-3, Qwen 등)
+                        </li>
+<li>
+                            **프롬프팅:** Few-shot, Zero-shot, Chain-of-Thought (CoT)
+                        </li>
+</ul>
+<h3 class="text-lg font-semibold text-slide-text mt-6 mb-2">기타 방법론</h3>
+<ul>
+<li>
+                            **전통 모델:** BERT 계열 (XLM-RoBERTa, mBERT)도 여전히 유효
+                        </li>
+<li>
+                            **데이터:** 대부분 팀이 외부 데이터 **미사용** (Few-shot만으로 충분)
+                        </li>
+<li>
+                            **결과:** Track C (교차언어)에서 저자원 언어 격차 더 심화
+                        </li>
+</ul>
+</div>
+<div class="figure-placeholder">
+<p class="text-center text-sm text-slide-gray mt-2">(예: LLM-based 70%, BERT-based 20%, Others 10%)</p>
+</div>
+</div>
+<div class="slide-footer">
+<span>SemEval-2025 Task 11 (Seo Hyuneun)</span>
+<span>7 / 9</span>
+</div>
+</section>
+        </div>
+    </div>
+</body>
+</html>

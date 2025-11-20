@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From EmoSet to MVP: How Large-scale Visual Emotion Data Enable Semantic Prompt Learning</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts (Pretendard for Korean, Inter for fallback) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soft-white': '#F9F8F6', // 부드러운 흰색 배경
+                        'dark-gray': '#333333',  // 기본 텍스트
+                        'coral-red': '#FF6B6B',  // 메인 하이라이트 (약간 부드럽게)
+                        'coral-dark': '#E05252', // 어두운 하이라이트
+                        'light-gray': '#EAEAEA', // 보더, 배경
+                    },
+                    fontFamily: {
+                        'sans': ['Pretendard', 'Inter', 'sans-serif'], // Pretendard 우선 적용
+                    },
+                    aspectRatio: {
+                        '16/9': '16 / 9',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Slide Styles -->
+    <style>
+        body {
+            font-family: 'Pretendard', 'Inter', sans-serif;
+            background-color: #202124; /* 어두운 배경 (프레젠테이션 강조) */
+            overflow: hidden; /* 스크롤 방지 */
+        }
+        #presentation-container {
+            /* 그림자 및 UI 일관성을 위해 */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        .slide {
+            transition: opacity 0.4s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            background-color: #F9F8F6; /* soft-white */
+            color: #333333; /* dark-gray */
+        }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* 슬라이드 기본 레이아웃 */
+        .slide-header {
+            padding: 2.5rem 3rem 0 3rem; /* 10 12 0 12 */
+        }
+        .slide-body {
+            flex-grow: 1;
+            padding: 1.5rem 3rem 3rem 3rem; /* 6 12 12 12 */
+            overflow-y: auto;
+        }
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 3rem; /* 3 12 */
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem; /* text-sm */
+            color: #888888;
+            border-top: 1px solid #EAEAEA; /* light-gray */
+        }
+        /* 공통 헤더 스타일 */
+        h2 {
+            font-size: 2rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #333333; /* dark-gray */
+            padding-bottom: 0.75rem; /* pb-3 */
+            border-bottom: 4px solid #FF6B6B; /* border-coral-red */
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            color: #333333;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin-top: 1rem;
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.8;
+            color: #444444;
+        }
+        p {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.8;
+            color: #444444;
+            margin-top: 1rem;
+        }
+        /* 피규어 플레이스홀더 */
+        .figure-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            min-height: 200px;
+            background-color: #F0F0F0; /* light-gray 옅은 버전 */
+            border: 2px dashed #BDBDBD; /* 회색 점선 */
+            border-radius: 0.5rem; /* rounded-lg */
+            color: #777777;
+            font-weight: 600;
+            font-size: 1rem; /* text-base */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 md:p-8">
+
+    <!-- Presentation Container -->
+    <div id="presentation-container" class="w-full max-w-6xl aspect-16/9 rounded-lg overflow-hidden relative">
+        
+        <!-- Slides Wrapper -->
+        <div id="slides-wrapper" class="w-full h-full relative">
+
+            <!-- SLIDE 1: Title & Context -->
+            <section class="slide active" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://placehold.co/1600x900/333333/555555?text=Abstract+Neural+Pattern); background-size: cover; background-position: center;">
+                <div class="flex-grow flex flex-col justify-center items-center text-center text-white p-12">
+                    <div class="bg-black bg-opacity-30 p-8 rounded-lg">
+                        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">From EmoSet to MVP:</h1>
+                        <p class="text-3xl md:text-4xl font-light mt-2">How Large-scale Visual Emotion Data Enable Semantic Prompt Learning</p>
+                    </div>
+                    <p class="text-2xl font-medium mt-10 text-gray-200">Image-based Emotion Recognition Dataset Review (Session #1)</p>
+                    <div class="mt-12 text-lg text-gray-300">
+                        <p class="font-bold">발표자: 서현은</p>
+                        <p>서경대학교 일반대학원 컴퓨터공학과</p>
+                    </div>
+                </div>
+                <div class="absolute bottom-0 left-0 w-full p-4 text-center text-sm text-gray-300 bg-black bg-opacity-20">
+                    Part of the Memory–Emotion Interaction Mapping Seminar Series (2025)
+                </div>
+            </section>
+
+            <!-- SLIDE 2: Presentation Overview -->
+            <section class="slide">
+                <div class="slide-header">
+                    <h2>Presentation Overview: 발표 목적과 시리즈 맥락</h2>
+                </div>
+                <div class="slide-body">
+                    <p>본 세미나는 감정 인식(Emotion Recognition) 연구를 **모달리티(Modality)**별로 탐구하는 2025년 시리즈의 첫 번째 세션입니다.</p>
+                    <ul>
+                        <li>금일 세션은 <strong class="text-coral-red">Image-based Emotion Recognition</strong> 연구 동향에 초점을 맞춥니다.</li>
+                        <li>후속 세션에서는 Text, Multimodal, 그리고 Memory와의 연관성을 순차적으로 다룰 예정입니다.</li>
+                    </ul>
+                    
+                    <div class="mt-8 p-6 bg-gray-100 rounded-lg border border-light-gray">
+                        <h3 class="text-xl font-semibold text-dark-gray">핵심 질문 (Key Questions)</h3>
+                        <p class="mt-2 text-lg">데이터셋 중심의 연구 방법론을 이해하기 위해 다음 3가지 질문에 답하는 것을 목표로 합니다.</p>
+                        <ol class="list-decimal list-inside mt-3 space-y-2 text-lg text-gray-700">
+                            <li>1. 해당 데이터셋으로 <strong class="text-coral-red">어떤 연구</strong>가 이루어졌는가? (What research?)</li>
+                            <li>2. 데이터셋이 <strong class="text-coral-red">어떤 실험</strong>에 활용되었는가? (How used?)</li>
+                            <li>3. <strong class="text-coral-red">어떤 방식</strong>으로 성능이 향상되었는가? (How improved?)</li>
+                        </ol>
+                    </div>
+                    
+                    <p class="mt-6 text-center text-xl font-semibold text-coral-dark">
+                        "Dataset enables method — and method validates dataset."
+                    </p>
+                </div>
+                <div class="slide-footer">
+                    <span>From EmoSet to MVP (Seo, Hyeeun)</span>
+                    <span>2 / 20</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: Presentation Flow -->
+            <section class="slide">
+                <div class="slide-header">
+                    <h2>Presentation Flow: 발표 구조</h2>
+                </div>
+                <div class="slide-body flex justify-between items-center">
+                    <!-- Flow Chart -->
+                    <div class="w-2/3">
+                        <div class="space-y-6">
+                            <div class="p-6 bg-gray-100 rounded-lg shadow-sm border-l-8 border-coral-red">
+                                <h3 class="text-2xl font-bold">Part A: EmoSet (ICCV 2023)</h3>
+                                <p class="text-lg mt-1">대규모 감정 데이터셋의 구축과 Attribute의 제안</p>
+                            </div>
+                            <div class="text-center text-4xl font-light text-gray-400">↓</div>
+                            <div class="p-6 bg-gray-100 rounded-lg shadow-sm border-l-8 border-coral-red">
+                                <h3 class="text-2xl font-bold">Part B: MVP (Info. Fusion 2024)</h3>
+                                <p class="text-lg mt-1">EmoSet을 활용한 SOTA 모델의 Prompt Learning 방법론</p>
+                            </div>
+                             <div class="text-center text-4xl font-light text-gray-400">↓</div>
+                            <div class="p-6 bg-gray-100 rounded-lg shadow-sm border-l-8 border-gray-400">
+                                <h3 class="text-2xl font-bold">Part C: Integration & Discussion</h3>
+                                <p class="text-lg mt-1">데이터와 모델의 상호작용 분석 및 향후 연구 방향</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modality Icons -->
+                    <div class="w-1/3 flex flex-col items-center pl-8">
+                        <h3 class="text-xl font-semibold mb-4">Seminar Series Modalities</h3>
+                        <div class="space-y-4 w-full max-w-xs">
+                            <div class="flex items-center p-4 bg-coral-red text-white rounded-lg shadow-lg ring-4 ring-coral-dark scale-105">
+                                <span class="text-4xl">📸</span>
+                                <div class="ml-4">
+                                    <div class="text-xs">SESSION #1</div>
+                                    <div class="font-bold text-xl">Image</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gray-200 text-gray-500 rounded-lg opacity-70">
+                                <span class="text-4xl">💬</span>
+                                <div class="ml-4">
+                                    <div class="text-xs">SESSION #2</div>
+                                    <div class="font-bold text-xl">Text</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gray-200 text-gray-500 rounded-lg opacity-70">
+                                <span class="text-4xl">🎥</span>
+                                <div class="ml-4">
+                                    <div class="text-xs">SESSION #3</div>
+                                    <div class="font-bold text-xl">Multimodal</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gray-200 text-gray-500 rounded-lg opacity-70">
+                                <span class="text-4xl">🧠</span>
+                                <div class="ml-4">
+                                    <div class="text-xs">SESSION #4</div>
+                                    <div class="font-bold text-xl">Memory</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>From EmoSet to MVP (Seo, Hyeeun)</span>
+                    <span>3 / 20</span>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Research Context: The Affective Gap -->
+            <section class="slide">
+                <div class="slide-header">
+                    <h2>Research Context: The Affective Gap</h2>
+                </div>
+                <div class="slide-body">
+                    <h3 class="text-2xl">Visual Emotion Analysis (VEA)란?</h3>
+                    <p>이미지 내에 포함된 시각적 자극(visual stimuli)으로부터 인간의 감정적 반응(emotional response)을 추론하고 예측하는 컴퓨터 비전의 하위 연구 분야입니다.</p>
+                    
+                    <div class="mt-8 grid grid-cols-2 gap-8">
+                        <div class="p-6 bg-red-50 border-l-4 border-red-500">
+                            <h3 class="text-xl font-semibold text-red-700">기존 연구의 한계 (Limitations)</h3>
+                            <ul>
+                                <li><strong>Small-scale Datasets:</strong> 주석(annotation)의 어려움으로 인해 데이터셋의 규모가 작고 다양성이 부족했습니다.</li>
+                                <li><strong>Handcrafted Features:</strong> 초기 연구는 색상, 질감 등 저수준(low-level) 특징에 의존했습니다.</li>
+                                <li><strong>The Affective Gap:</strong> Low-level 시각 특징과 High-level 감정적 의미 사이의 간극을 의미합니다.</li>
+                            </ul>
+                        </div>
+                        <div class="p-6 bg-green-50 border-l-4 border-green-600">
+                            <h3 class="text-xl font-semibold text-green-700">연구의 필요성 (Motivation)</h3>
+                            <p>이러한 `Affective Gap`을 해소하고 모델의 일반화 성능을 높이기 위해, <strong class="text-green-700">대규모(large-scale)</strong>이면서 <strong class="text-green-700">풍부한 속성(rich attribute)</strong>을 가진 새로운 데이터셋 구축이 필요했습니다.</p>
+                        </div>
+                    </div>
+                    
+                    <p class="mt-10 text-center text-2xl font-semibold text-coral-dark">
+                        "How can data bridge the affective gap?"
+                    </p>
+                </div>
+                <div class="slide-footer">
+                    <span>From EmoSet to MVP (Seo, Hyeeun)</span>
+                    <span>4 / 20</span>
+                </div>
+            </section>
+            
+        </div> <!-- /#slides-wrapper -->
+
+        <!-- Navigation Controls -->
+        <div id="controls" class="absolute bottom-0 left-0 w-full flex justify-between items-center p-3 bg-white border-t border-light-gray z-10">
+            <button id="prev-btn" class="px-5 py-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-gray-700">이전</button>
+            <div id="slide-counter" class="text-sm font-semibold text-gray-600">1 / 20</div>
+            <button id="next-btn" class="px-5 py-2 bg-coral-red rounded-md hover:bg-coral-dark transition-colors text-white font-semibold">다음</button>
+        </div>
+
+    </div> <!-- /#presentation-container -->
+
+    <!-- JavaScript for Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const slideCounter = document.getElementById('slide-counter');
+            
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+
+            function showSlide(index) {
+                // Hide all slides
+                slides.forEach((slide) => {
+                    slide.classList.remove('active');
+                });
+
+                // Show target slide
+                const targetSlide = slides[index];
+                if (targetSlide) {
+                    targetSlide.classList.add('active');
+                }
+
+                // Update UI
+                slideCounter.textContent = `${index + 1} / ${totalSlides}`;
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === totalSlides - 1;
+                currentSlide = index;
+            }
+
+            function nextSlide() {
+                if (currentSlide < totalSlides - 1) {
+                    showSlide(currentSlide + 1);
+                }
+            }
+
+            function prevSlide() {
+                if (currentSlide > 0) {
+                    showSlide(currentSlide - 1);
+                }
+            }
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+            });
+
+            // Button navigation
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Show the first slide initially
+            showSlide(0);
+        });
+    </script>
+
+</body>
+</html>
